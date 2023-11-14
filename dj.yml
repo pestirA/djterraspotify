@@ -1,0 +1,25 @@
+name: Refresh Spotify Playlist
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Initialize
+        run: terraform init
+
+      - name: Apply changes
+        run: terraform apply -auto-approve
+
+      - name: Cleanup
+        run: terraform destroy -auto-approve
